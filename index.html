@@ -44,14 +44,17 @@
     padding: 18px 0;
   }
   
-  .logo {
-    font-size: 26px;
-    font-weight: 900;
-    color: var(--primary);
-    letter-spacing: 2px;
+  /* Стили для логотипа-картинки */
+  .logo-link {
+    display: inline-block;
+    text-decoration: none;
   }
-  
-  .logo span { color: var(--accent); }
+
+  .logo-img {
+    height: 40px; 
+    width: auto;  
+    display: block;
+  }
   
   .nav-links {
     display: flex;
@@ -78,6 +81,7 @@
     cursor: pointer;
     border: none;
     font-size: 15px;
+    font-family: inherit;
   }
   
   .btn-primary {
@@ -355,7 +359,7 @@
   .form-inline {
     display: flex;
     gap: 12px;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
     flex-wrap: wrap;
     justify-content: center;
@@ -368,6 +372,7 @@
     border-radius: 8px;
     border: none;
     font-size: 16px;
+    font-family: inherit;
   }
   
   .form-inline input:focus {
@@ -427,13 +432,15 @@
 
 <header>
   <nav class="container">
-    <div class="logo">SAVA<span>N</span></div>
+    <a href="#" class="logo-link">
+      <img src="logo.png" alt="SAVAN" class="logo-img">
+    </a>
     <ul class="nav-links">
       <li><a href="#courses">Курсы</a></li>
       <li><a href="#about">О школе</a></li>
       <li><a href="#contacts">Контакты</a></li>
     </ul>
-    <a href="#signup" class="btn btn-primary">Записаться</a>
+    <a href="#signup" class="btn btn-primary">Пробное занятие</a>
   </nav>
 </header>
 
@@ -442,7 +449,7 @@
     <div class="hero-content">
       <h1>Создавай <span>игры</span> и учись программировать</h1>
       <p>От первых шагов в Scratch до серьёзной разработки на C и Unreal Engine. Практическое обучение от действующего разработчика.</p>
-      <a href="#courses" class="btn btn-primary">Выбрать курс</a>
+      <a href="#signup" class="btn btn-primary">Записаться на пробное</a>
       
       <div class="hero-stats">
         <div class="stat"><h3>6</h3><p>направлений обучения</p></div>
@@ -523,7 +530,6 @@
       
       <div class="teacher-card">
         <div class="teacher-avatar">
-          <!-- Убедись, что фото лежит в той же папке, что и html-файл -->
           <img src="my_photo.jpg" alt="Савва Головченко">
         </div>
         <h3>Савва Головченко</h3>
@@ -556,11 +562,11 @@
 <section id="signup">
   <div class="cta">
     <h2>Готов создать свою первую игру?</h2>
-    <p>Оставьте заявку — Савва свяжется с вами и поможет выбрать подходящий курс</p>
-    <form class="form-inline" onsubmit="event.preventDefault(); alert('Спасибо! Мы свяжемся с вами.');">
-      <input type="text" placeholder="Ваше имя" required>
-      <input type="tel" placeholder="Телефон" required>
-      <button type="submit" class="btn btn-primary">Записаться</button>
+    <p>Запишись на <strong>бесплатное пробное занятие</strong>. Савва свяжется с тобой и поможет выбрать подходящий курс!</p>
+    <form class="form-inline" id="tg-form">
+      <input type="text" name="name" placeholder="Ваше имя" required>
+      <input type="tel" name="phone" placeholder="Телефон" required>
+      <button type="submit" class="btn btn-primary" id="submit-btn">Записаться</button>
     </form>
   </div>
 </section>
@@ -569,13 +575,13 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="logo" style="color:white; margin-bottom:16px;">SAVA<span>N</span></div>
+        <div class="logo" style="color:white; margin-bottom:16px; font-size: 26px; font-weight:900;">SAVA<span style="color:#f59e0b;">N</span></div>
         <p>Школа программирования и разработки игр</p>
       </div>
       <div>
         <h4>Обучение</h4>
         <a href="#courses">Все курсы</a>
-        <a href="#signup">Оставить заявку</a>
+        <a href="#signup">Пробное занятие</a>
       </div>
       <div>
         <h4>Компания</h4>
@@ -584,8 +590,7 @@
       </div>
       <div>
         <h4>Контакты</h4>
-        <!-- Замените на свои реальные контакты -->
-        <a href="tel:+70000000000">+7 (000) 000-00-00</a>
+        <a href="tel:+79231463940">+7 (923) 146-39-40</a>
         <a href="mailto:hello@savan.ru">hello@savan.ru</a>
       </div>
     </div>
@@ -595,16 +600,8 @@
   </div>
 </footer>
 
-<script>
-  // Плавная прокрутка
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-</script>
+<!-- Подключаем наш безопасный скрипт -->
+<script src="script.js"></script>
 
 </body>
 </html>
