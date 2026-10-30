@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAVAN — Группы</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <nav class="container">
+    <a href="index.html"><img src="logo.png" alt="SAVAN" class="logo-img"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="lessons.html">Уроки</a></li>
+      <li><a href="group.html" class="active">Группы</a></li>
+      <li><a href="account.html" class="btn btn-outline">Личный кабинет</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="container" style="padding-top: 150px; min-height: 70vh;">
+  <h2 class="section-title">Наши группы</h2>
+  <p class="section-subtitle">Выбери направление по душе</p>
+  
+  <!-- Сюда будут загружаться группы из базы -->
+  <div class="grid" id="groups-container">
+    <p style="color: var(--text-muted);">Загрузка групп...</p>
+  </div>
+</section>
+
+<footer><p>© 2026 SAVAN.</p></footer>
+
+<script type="module">
+  import { db } from './firebase.js';
+  import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const container = document.getElementById('groups-container');
+
+  async function loadGroups() {
+    try {
+      // Берем все документы из коллекции groups
+      const querySnapshot = await getDocs(collection(db, "groups"));
+      
+      if (querySnapshot.empty) {
+        container.innerHTML = '<p style="color: var(--text-muted);">Пока нет доступных групп.</p>';
+        return;
+      }
+
+      container.innerHTML = ''; // Очищаем "Загрузку"
+
+      querySnapshot.forEach((doc) => {
+        const group = doc.data();
+        
+        // Создаем карточку для каждой группы
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3>${group.name || 'Группа без названия'}</h3>
+          <p><strong>Преподаватель:</strong> ${group.teacher || 'Не указан'}</p>
+          <p><strong>Расписание:</strong> ${group.schedule || 'Уточняется'}</p>
+          <a href="https://t.me/savan_progschool_bot" target="_blank" class="btn btn-primary" style="margin-top: 15px; display: inline-block;">Записаться</a>
+        `;
+        container.appendChild(card);
+      });
+    } catch (error) {
+      console.error("Ошибка загрузки групп:", error);
+      container.innerHTML = '<p style="color: red;">Ошибка загрузки. Проверьте консоль.</p>';
+    }
+  }
+
+  loadGroups();
+</script>
+</body>
+</html>
