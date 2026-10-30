@@ -1,0 +1,45 @@
+<script type="module">
+  import { auth, login, logout, getUserAndGroupData, onAuthStateChanged } from './firebase.js';
+
+  window.doLogin = async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    try {
+      await login(email, password);
+    } catch (error) {
+      alert('Ошибка входа: ' + error.message);
+    }
+  };
+
+  window.doLogout = () => logout();
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('user-email').innerText = user.email;
+
+      // Получаем данные и ученика, и группы
+      const data = await getUserAndGroupData(user.email);
+      
+      if (data && data.user) {
+        document.getElementById('user-name').innerText = data.user.name || 'Ученик';
+        
+        if (data.group) {
+          // Данные берем из коллекции groups
+          document.getElementById('user-group').innerText = data.group.name;
+          document.getElementById('user-schedule').innerText = data.group.schedule;
+          document.getElementById('telemost-link').href = data.group.telemost;
+          document.getElementById('telemost-link').style.display = 'block';
+        } else {
+          document.getElementById('user-group').innerText = 'Группа не найдена';
+          document.getElementById('user-schedule').innerText = '—';
+          document.getElementById('telemost-link').style.display = 'none';
+        }
+      }
+    } else {
+      document.getElementById('login-form').style.display = 'block';
+      document.getElementById('dashboard').style.display = 'none';
+    }
+  });
+</script>
