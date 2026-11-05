@@ -1,133 +1,103 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAVAN — Личный кабинет</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header>
-  <nav class="container">
-    <a href="index.html"><img src="logo.png" alt="SAVAN" class="logo-img"></a>
-    <ul class="nav-links">
-      <li><a href="index.html">Главная</a></li>
-      <li><a href="lessons.html">Уроки</a></li>
-      <li><a href="group.html">Группы</a></li>
-      <li><a href="account.html" class="active btn btn-outline">Личный кабинет</a></li>
-    </ul>
-  </nav>
-</header>
-
-<section class="container" style="padding-top: 150px; min-height: 70vh;">
-  <div class="modal-content" style="margin: 0 auto; display: block; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border); padding: 40px; max-width: 450px;">
-    <h2 style="text-align: center; margin-bottom: 20px; color: white;">Вход для учеников</h2>
-    
-    <!-- Форма входа -->
-    <div id="login-form">
-      <input type="email" id="email" placeholder="Email" style="width: 100%; padding: 14px; margin-bottom: 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--dark); color: white;">
-      <input type="password" id="password" placeholder="Пароль" style="width: 100%; padding: 14px; margin-bottom: 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--dark); color: white;">
-      <button onclick="doLogin()" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Войти</button>
-    </div>
-
-    <!-- Данные ученика -->
-    <div id="dashboard" style="display: none;">
-      <h3 id="user-email" style="color: var(--primary); margin-bottom: 20px; text-align: center;"></h3>
-      
-      <div style="background: var(--dark); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border);">
-        <p style="color: var(--text-muted); font-size: 14px;">Имя: <span id="user-name" style="color: white; font-weight: bold;"></span></p>
-        <h4 style="color: white; margin-top: 10px; margin-bottom: 5px;">Группа: <span id="user-group" style="color: var(--accent);"></span></h4>
-        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Расписание: <span id="user-schedule" style="color: white;"></span></p>
-        <a id="telemost-link" href="#" target="_blank" class="btn btn-primary" style="width: 100%; text-align: center; display: block;">Подключиться к уроку</a>
-      </div>
-      
-      <button onclick="doLogout()" style="width: 100%; background: #ef4444; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">Выйти</button>
-    </div>
-  </div>
-</section>
-
-<footer><p>© 2026 SAVAN.</p></footer>
-
-<!-- ПОДКЛЮЧАЕМ FIREBASE НАПРЯМУЮ -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCO59_IWEHXOFMDOIhXYMeqzcZKw5rEq_0",
-    authDomain: "savan-school.firebaseapp.com",
-    projectId: "savan-school",
-    storageBucket: "savan-school.firebasestorage.app",
-    messagingSenderId: "16789921040",
-    appId: "1:16789921040:web:ec08c90c1ad287aa8b1995"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+  import { auth, login, logout, getUserAndGroupData, onAuthStateChanged } from './firebase.js';
 
   window.doLogin = async () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await login(email, password);
     } catch (error) {
       alert('Ошибка входа: ' + error.message);
     }
   };
 
-  window.doLogout = () => signOut(auth);
+  window.doLogout = () => logout();
 
-  // ГЛАВНОЕ ИСПРАВЛЕНИЕ: Ждем загрузки страницы!
-  document.addEventListener('DOMContentLoaded', () => {
-    
-    onAuthStateChanged(auth, async (user) => {
-      // Проверяем, существуют ли элементы на странице
-      const loginForm = document.getElementById('login-form');
-      const dashboard = document.getElementById('dashboard');
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('user-email').innerText = user.email;
 
-      if (!loginForm || !dashboard) return; 
-
-      if (user) {
-        loginForm.style.display = 'none';
-        dashboard.style.display = 'block';
-        document.getElementById('user-email').innerText = user.email;
-
-        try {
-          // Получаем данные ученика
-          const userDoc = await getDoc(doc(db, "users", user.email));
-          
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            document.getElementById('user-name').innerText = userData.name || 'Ученик';
-            
-            // Если есть ID группы, ищем её в коллекции groups
-            if (userData.group) {
-              const groupDoc = await getDoc(doc(db, "groups", userData.group));
-              if (groupDoc.exists()) {
-                const groupData = groupDoc.data();
-                document.getElementById('user-group').innerText = groupData.name;
-                document.getElementById('user-schedule').innerText = groupData.schedule;
-                document.getElementById('telemost-link').href = groupData.telemost;
-              } else {
-                document.getElementById('user-group').innerText = 'Группа не найдена';
-                document.getElementById('user-schedule').innerText = '—';
-                document.getElementById('telemost-link').style.display = 'none';
-              }
-            }
-          }
-        } catch (e) {
-          console.error("Ошибка загрузки базы:", e);
+      const data = await getUserAndGroupData(user.email);
+      
+      if (data && data.user) {
+        document.getElementById('user-name').innerText = data.user.name || 'Ученик';
+        
+        // Группа
+        if (data.group) {
+          document.getElementById('user-group').innerText = data.group.name;
+          document.getElementById('user-schedule').innerText = data.group.schedule;
+          document.getElementById('telemost-link').href = data.group.telemost;
         }
-      } else {
-        loginForm.style.display = 'block';
-        dashboard.style.display = 'none';
-      }
-    });
 
+        // Очки
+        document.getElementById('user-respect').innerText = (data.user.respect_points || 0) + ' 🏆';
+        document.getElementById('user-disrespect').innerText = (data.user.disrespect_points || 0) + ' 💀';
+        
+        // ГРАМОТЫ (Загрузка картинок)
+        const achContainer = document.getElementById('user-achievements');
+        achContainer.innerHTML = '';
+        
+        if (data.user.achievements && data.user.achievements.length > 0) {
+          data.user.achievements.forEach(fileName => {
+            // Создаем контейнер для грамоты
+            const badge = document.createElement('div');
+            badge.style.cssText = 'position: relative; display: inline-block; margin: 5px; text-align: center;';
+
+            // Создаем картинку
+            const img = document.createElement('img');
+            // Путь к папке achievements. Обязательно добавь .png
+            img.src = `achievements/${fileName}.png`; 
+            img.style.cssText = 'width: 60px; height: 60px; object-fit: contain; border-radius: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.05);';
+            img.alt = fileName;
+            
+            // Если картинки нет (ошибка загрузки), показываем заглушку
+            img.onerror = () => {
+              img.style.display = 'none';
+              const fallback = document.createElement('div');
+              fallback.innerText = '📜';
+              fallback.style.cssText = 'width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; font-size: 24px;';
+              badge.appendChild(fallback);
+            };
+
+            // Всплывающая подсказка при наведении (название файла)
+            const title = document.createElement('div');
+            title.innerText = fileName.replace(/_/g, ' '); // Меняем подчеркивания на пробелы
+            title.style.cssText = 'font-size: 10px; color: var(--text-muted); margin-top: 4px; max-width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;';
+
+            badge.appendChild(img);
+            badge.appendChild(title);
+            achContainer.appendChild(badge);
+          });
+        } else {
+          achContainer.innerHTML = '<span style="color: var(--text-muted); font-size: 14px;">Пока нет грамот</span>';
+        }
+
+        // Журнал наказаний
+        const logContainer = document.getElementById('disrespect-log-container');
+        const logList = document.getElementById('user-disrespect-log');
+        
+        if (data.user.disrespect_log && data.user.disrespect_log.length > 0) {
+          logContainer.style.display = 'block';
+          logList.innerHTML = '';
+          data.user.disrespect_log.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'log-item';
+            div.innerHTML = `
+              <span style="color: white;">${item.reason}</span>
+              <span style="color: #ef4444; font-weight: bold;">-${item.points} 💀</span>
+            `;
+            logList.appendChild(div);
+          });
+        } else {
+          logContainer.style.display = 'none';
+        }
+
+      }
+    } else {
+      document.getElementById('login-form').style.display = 'block';
+      document.getElementById('dashboard').style.display = 'none';
+    }
   });
 </script>
-</body>
-</html>
