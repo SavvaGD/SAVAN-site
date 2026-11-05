@@ -3,8 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAVAN — Уроки</title>
+<title>SAVAN — Подробнее о курсах</title>
 <link rel="stylesheet" href="style.css">
+<style>
+  .course-details {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-left: 5px solid var(--primary);
+  }
+  .course-details h3 {
+    font-size: 24px;
+    color: var(--text-main);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .course-details ul {
+    list-style: none;
+    margin-top: 15px;
+  }
+  .course-details li {
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    padding-left: 24px;
+    position: relative;
+  }
+  .course-details li::before {
+    content: '👉';
+    position: absolute;
+    left: 0;
+    font-size: 14px;
+  }
+  .course-result {
+    background: rgba(139,92,246,0.1);
+    border: 1px dashed var(--primary);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    color: var(--text-main);
+    font-size: 15px;
+  }
+  .course-meta-tags {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+</style>
 </head>
 <body>
 
@@ -21,57 +78,125 @@
 </header>
 
 <section class="container" style="padding-top: 150px; min-height: 70vh; padding-bottom: 100px;">
-  <h2 class="section-title">Программа обучения</h2>
-  <p class="section-subtitle">Пошаговый путь от новичка до создания 3D-игр</p>
-  
-  <div class="grid">
-    <!-- Карточка 1 -->
-    <div class="card">
-      <div style="font-size: 42px; margin-bottom: 15px;">🐻</div>
-      <h3>Программирование для начинающих: Ursula</h3>
-      <p>Создаём 3D-миры с помощью визуального программирования (ПРИМС). Идеальный старт для самых маленьких — никакого сложного кода, только логика и творчество.</p>
-      <a href="mal.html" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 15px;">Подробнее</a>
-    </div>
+  <h2 class="section-title">Подробно о курсах</h2>
+  <p class="section-subtitle">Разбираем по косточкам: чему научимся и что получится в итоге</p>
 
-    <!-- Карточка 2 -->
-    <div class="card">
-      <div style="font-size: 42px; margin-bottom: 15px;">🧩</div>
-      <h3>Создание серьёзных игр на Scratch</h3>
-      <p>Блочное программирование для создания полноценных 2D-игр. Учимся работать с переменными, циклами и событиями.</p>
-      <a href="mal.html" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 15px;">Подробнее</a>
+  <!-- Курс 1 -->
+  <div class="course-details">
+    <h3>🐻 Программирование для начинающих: Ursula</h3>
+    <div class="course-meta-tags">
+      <span class="tag">Возраст: 8–11 лет</span>
+      <span class="tag">Уровень: Новичок</span>
+      <span class="tag">Формат: Визуальный</span>
     </div>
+    <p style="color: var(--text-main); margin-bottom: 15px;">Идеальный первый шаг в мир IT. Мы не пишем сложный код буквами, а собираем логику игры из визуальных блоков (ПРИМС). Это учит алгоритмическому мышлению без страха сделать ошибку в синтаксисе.</p>
+    <ul>
+      <li>Разберемся, что такое переменные, циклы и условия (на пальцах).</li>
+      <li>Научимся управлять 3D-персонажем и строить уровни.</li>
+      <li>Создадим свою первую полноценную игру.</li>
+    </ul>
+    <div class="course-result">
+      <strong>🎯 Результат:</strong> Собственная 3D-игра, в которую можно поиграть с друзьями.
+    </div>
+  </div>
 
-    <!-- Карточка 3 -->
-    <div class="card">
-      <div style="font-size: 42px; margin-bottom: 15px;">💻</div>
-      <h3>Терминальные игры на Python</h3>
-      <p>Переходим на настоящий код! Создаём текстовые квесты и игры в консоли, изучая синтаксис Python.</p>
-      <a href="mal.html" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 15px;">Подробнее</a>
+  <!-- Курс 2 -->
+  <div class="course-details" style="border-left-color: #f59e0b;">
+    <h3>🧩 Создание серьёзных игр на Scratch</h3>
+    <div class="course-meta-tags">
+      <span class="tag">Возраст: 9–13 лет</span>
+      <span class="tag">Уровень: Базовый</span>
+      <span class="tag">Формат: Блочный</span>
     </div>
+    <p style="color: var(--text-main); margin-bottom: 15px;">Scratch — легендарная среда от MIT. Здесь мы переходим от простых мультиков к сложным игровым механикам. Учимся работать с координатами, физикой и событиями.</p>
+    <ul>
+      <li>Создание 2D-платформеров и аркад.</li>
+      <li>Работа со звуком, анимацией и клонами спрайтов.</li>
+      <li>Изучение игрового баланса (чтобы играть было интересно).</li>
+    </ul>
+    <div class="course-result" style="background: rgba(245,158,11,0.1); border-color: #f59e0b;">
+      <strong>🎯 Результат:</strong> 2-3 готовых 2D-игры с меню, уровнями и системой очков.
+    </div>
+  </div>
 
-    <!-- Карточка 4 -->
-    <div class="card">
-      <div style="font-size: 42px; margin-bottom: 15px;">⚙️</div>
-      <h3>Продвинутый уровень: C</h3>
-      <p>Погружение в системное программирование. Понимание памяти, указателей и того, как всё работает "под капотом".</p>
-      <a href="mal.html" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 15px;">Подробнее</a>
+  <!-- Курс 3 -->
+  <div class="course-details" style="border-left-color: #3b82f6;">
+    <h3>💻 Терминальные игры на Python</h3>
+    <div class="course-meta-tags">
+      <span class="tag">Возраст: 11–16 лет</span>
+      <span class="tag">Уровень: Средний</span>
+      <span class="tag">Формат: Текстовый код</span>
     </div>
+    <p style="color: var(--text-main); margin-bottom: 15px;">Переходим на настоящий «взрослый» язык программирования. Никаких графических движков — только консоль и чистая логика. Это лучший способ понять, как работают данные.</p>
+    <ul>
+      <li>Изучение синтаксиса Python, работа со строками и списками.</li>
+      <li>Создание текстовых квестов и «Змейки» в консоли.</li>
+      <li>Изучение функций и модулей.</li>
+    </ul>
+    <div class="course-result" style="background: rgba(59,130,246,0.1); border-color: #3b82f6;">
+      <strong>🎯 Результат:</strong> Текстовая RPG-игра с системой инвентаря и ветвлением сюжета.
+    </div>
+  </div>
 
-    <!-- Карточка 5 -->
-    <div class="card">
-      <div style="font-size: 42px; margin-bottom: 15px;">🕹️</div>
-      <h3>ПК и мобильные игры на C + Raylib</h3>
-      <p>Создание реальных 2D-игр с графикой на языке C с использованием библиотеки Raylib. От идеи до билда.</p>
-      <a href="mal.html" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 15px;">Подробнее</a>
+  <!-- Курс 4 -->
+  <div class="course-details" style="border-left-color: #ef4444;">
+    <h3>⚙️ Продвинутый уровень: C</h3>
+    <div class="course-meta-tags">
+      <span class="tag">Возраст: 13–16 лет</span>
+      <span class="tag">Уровень: Продвинутый</span>
+      <span class="tag">Формат: Системный код</span>
     </div>
+    <p style="color: var(--text-main); margin-bottom: 15px;">Хардкор для тех, кто хочет понять, как компьютер работает на самом деле. Язык C — это фундамент всех современных ОС и игровых движков.</p>
+    <ul>
+      <li>Понимание памяти, указателей и структур данных.</li>
+      <li>Работа с массивами и динамической памятью.</li>
+      <li>Написание быстрых и оптимизированных программ.</li>
+    </ul>
+    <div class="course-result" style="background: rgba(239,68,68,0.1); border-color: #ef4444;">
+      <strong>🎯 Результат:</strong> Понимание того, как устроен код «под капотом», и написание собственной утилиты на C.
+    </div>
+  </div>
 
-    <!-- Карточка 6 -->
-    <div class="card">
-      <div style="font-size: 42px; margin-bottom: 15px;">🎮</div>
-      <h3>3D игры на Unreal Engine</h3>
-      <p>Работа с одним из самых мощных движков в индустрии. Создание 3D-локаций, Blueprints и механик.</p>
-      <a href="mal.html" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 15px;">Подробнее</a>
+  <!-- Курс 5 -->
+  <div class="course-details" style="border-left-color: #10b981;">
+    <h3>🕹️ ПК и мобильные игры на C + Raylib</h3>
+    <div class="course-meta-tags">
+      <span class="tag">Возраст: 13–16 лет</span>
+      <span class="tag">Уровень: Продвинутый</span>
+      <span class="tag">Формат: Графика + Код</span>
     </div>
+    <p style="color: var(--text-main); margin-bottom: 15px;">Соединяем мощь языка C с графической библиотекой Raylib. Учимся рисовать спрайты, обрабатывать нажатия клавиш и создавать игровой цикл с нуля.</p>
+    <ul>
+      <li>Изучение основ игрового движка (Game Loop).</li>
+      <li>Работа со спрайтами, коллизиями и анимацией.</li>
+      <li>Сборка игры под ПК и Android.</li>
+    </ul>
+    <div class="course-result" style="background: rgba(16,185,129,0.1); border-color: #10b981;">
+      <strong>🎯 Результат:</strong> Полноценная 2D-игра с графикой, которую можно установить на телефон.
+    </div>
+  </div>
+
+  <!-- Курс 6 -->
+  <div class="course-details" style="border-left-color: #8b5cf6;">
+    <h3>🎮 3D игры на Unreal Engine</h3>
+    <div class="course-meta-tags">
+      <span class="tag">Возраст: 12–16 лет</span>
+      <span class="tag">Уровень: Pro</span>
+      <span class="tag">Формат: Движок</span>
+    </div>
+    <p style="color: var(--text-main); margin-bottom: 15px;">Работа с движком, на котором сделаны Fortnite и Batman. Изучаем Blueprints (визуальное программирование) и учимся строить красивые 3D-миры.</p>
+    <ul>
+      <li>Создание 3D-ландшафтов и материалов.</li>
+      <li>Логика на Blueprints (освещение, движение, триггеры).</li>
+      <li>Сборка проекта и его упаковка в .exe файл.</li>
+    </ul>
+    <div class="course-result" style="background: rgba(139,92,246,0.1); border-color: #8b5cf6;">
+      <strong>🎯 Результат:</strong> 3D-локация с проработанным окружением и интерактивными элементами.
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 50px;">
+    <a href="https://t.me/savan_progschool_bot?start=site" target="_blank" class="btn btn-primary" style="font-size: 18px; padding: 16px 36px;">🚀 Записаться на пробное</a>
   </div>
 </section>
 
