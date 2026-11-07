@@ -4,78 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAVAN — Подробнее о курсах</title>
-<link rel="stylesheet" href="style.css">
-<style>
-  .course-details {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 30px;
-    margin-bottom: 30px;
-    border-left: 5px solid var(--primary);
-  }
-  .course-details h3 {
-    font-size: 24px;
-    color: var(--text-main);
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .course-details ul {
-    list-style: none;
-    margin-top: 15px;
-  }
-  .course-details li {
-    color: var(--text-muted);
-    margin-bottom: 10px;
-    padding-left: 24px;
-    position: relative;
-  }
-  .course-details li::before {
-    content: '👉';
-    position: absolute;
-    left: 0;
-    font-size: 14px;
-  }
-  .course-result {
-    background: rgba(139,92,246,0.1);
-    border: 1px dashed var(--primary);
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 20px;
-    color: var(--text-main);
-    font-size: 15px;
-  }
-  .course-meta-tags {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-  }
-  .tag {
-    background: var(--dark);
-    border: 1px solid var(--border);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-</style>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
-<header>
-  <nav class="container">
-    <a href="index.html"><img src="logo.png" alt="SAVAN" class="logo-img"></a>
-    <ul class="nav-links">
-      <li><a href="index.html">Главная</a></li>
-      <li><a href="lessons.html" class="active">Уроки</a></li>
-      <li><a href="group.html">Группы</a></li>
-      <li><a href="account.html" class="btn btn-outline">Личный кабинет</a></li>
-    </ul>
-  </nav>
-</header>
+<header id="site-header"></header>
 
 <section class="container" style="padding-top: 150px; min-height: 70vh; padding-bottom: 100px;">
   <h2 class="section-title">Подробно о курсах</h2>
@@ -194,6 +126,6 @@
   </div>
 </section>
 
-<footer><p>© 2026 SAVAN.</p></footer>
+<footer id="site-footer"></footer>
 </body>
 </html>
