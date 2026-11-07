@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAVAN — Сайт и домен</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  .doc-content { background: var(--card-bg); border: 1px solid var(--border); padding: 40px; border-radius: 16px; line-height: 1.8; border-left: 4px solid #8b5cf6; }
+  .doc-content p { margin-bottom: 20px; color: var(--text-main); }
+  .doc-content h3 { margin-top: 30px; margin-bottom: 15px; color: #8b5cf6; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<section class="container" style="padding-top: 150px; max-width: 800px; min-height: 70vh; padding-bottom: 100px;">
+  <div style="margin-bottom: 20px; color: var(--text-muted); font-size: 14px;">
+    <a href="/about/index.html" style="color: var(--primary); text-decoration: none;">О школе</a> / 
+    <a href="index.html" style="color: var(--primary); text-decoration: none;">Глава 5</a> / 
+    <span>Пункт 5.2</span>
+  </div>
+  <div class="doc-content">
+    <h2 style="color: var(--text-main); margin-bottom: 20px;">5.2. Сайт и домен</h2>
+    <p>Хостинг сайта осуществляется бесплатно на платформе <strong>GitHub Pages</strong>. Это значит, что сайт живет прямо в репозитории с кодом.</p>
+    
+    <h3>Как куплен домен?</h3>
+    <p>Домен <strong>savanschool.site</strong> был приобретен на российском регистраторе Jino. Чтобы сайт на GitHub Pages открывался по этому красивому адресу, мне пришлось вручную прописывать A-записи и CNAME-записи в DNS-панели.</p>
+    <p>Отдельная боль — это получение SSL-сертификата (зеленого замочка). GitHub выпускал его с задержкой, и нам пришлось перепробовать кучу способов, чтобы заставить его работать.</p>
+  </div>
+</section>
+<footer id="site-footer"></footer>
+<script src="/incfah.js"></script>
+</body>
+</html>
