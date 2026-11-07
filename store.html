@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAVAN — Магазин призов</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  .store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+  .store-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .store-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(139,92,246,0.2);
+  }
+  .store-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 15px;
+  }
+  .store-price {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header id="site-header"></header>
+
+<section class="container" style="padding-top: 150px; min-height: 70vh; padding-bottom: 100px;">
+  <h2 class="section-title">Магазин призов</h2>
+  <p class="section-subtitle">Трать очки уважения на крутые бонусы от SAVAN</p>
+
+  <div class="store-grid" id="store-container">
+    <p style="color: var(--text-muted); text-align: center; width: 100%;">Загрузка товаров...</p>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+<script src="/incfah.js"></script>
+
+<!-- Скрипт для загрузки товаров -->
+<script type="module">
+  import { db } from '/firebase.js';
+  import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const container = document.getElementById('store-container');
+
+  async function loadStore() {
+    try {
+      // Берем документ products из коллекции store
+      const productsDoc = await getDoc(doc(db, "store", "products"));
+      
+      if (!productsDoc.exists()) {
+        container.innerHTML = '<p style="color: var(--text-muted);">Магазин пока пуст.</p>';
+        return;
+      }
+
+      const productsData = productsDoc.data();
+      container.innerHTML = ''; 
+
+      // Перебираем все поля внутри документа (domain, skin и т.д.)
+      for (const [key, item] of Object.entries(productsData)) {
+        
+        // Берем картинку из поля icon, если его нет - ставим логотип
+        const iconName = item.icon || 'default'; 
+        const imgPath = `/prods/${iconName}.png`;
+
+        const card = document.createElement('div');
+        card.className = 'store-card';
+        
+        card.innerHTML = `
+          <div>
+            <img src="${imgPath}" class="store-img" alt="${item.name}" onerror="this.src='/logo.png'; this.style.opacity='0.5';">
+            <h3>${item.name}</h3>
+          </div>
+          <div>
+            <div class="store-price">${item.price} 🏆</div>
+            <button onclick="buyProduct('${key}')" class="btn btn-primary" style="width: 100%;">Купить</button>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+
+    } catch (error) {
+      console.error(error);
+      container.innerHTML = '<p style="color: red;">Ошибка при загрузке магазина.</p>';
+    }
+  }
+
+  // Временная функция покупки
+  window.buyProduct = (productId) => {
+    alert(`Ты пытаешься купить товар: ${productId}. (Скоро здесь появится списание очков)`);
+  };
+
+  loadStore();
+</script>
+</body>
+</html>
