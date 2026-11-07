@@ -4,30 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAVAN — Школа программирования и геймдева</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<header id="site-header"></header>
 
-<header>
-  <nav class="container">
-    <a href="index.html"><img src="logo.png" alt="SAVAN" class="logo-img"></a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Главная</a></li>
-      <li><a href="lessons.html">Уроки</a></li>
-      <li><a href="group.html">Группы</a></li>
-      <li><a href="account.html" class="btn btn-outline">Личный кабинет</a></li>
-    </ul>
-  </nav>
-</header>
-
-<!-- HERO СЕКЦИЯ -->
 <section class="hero">
   <div class="container">
     <div class="hero-content">
       <h1>Создавай <span>игры</span> и учись программировать</h1>
       <p>Для школьников 8–16 лет. От первых шагов в Scratch до серьёзной разработки на C и Unreal Engine. Практическое обучение от школьника-разработчика.</p>
       <a href="https://t.me/savan_progschool_bot?start=site" target="_blank" class="btn btn-primary" style="font-size: 18px; padding: 14px 32px;">Записаться на пробное</a>
-      
       <div class="hero-stats">
         <div class="stat"><h3>6</h3><p>направлений обучения</p></div>
         <div class="stat"><h3>Группы</h3><p>формат обучения</p></div>
@@ -37,50 +24,24 @@
   </div>
 </section>
 
-<!-- ГЛАВНЫЕ КУРСЫ (3 шт) -->
 <section id="courses" class="container">
   <h2 class="section-title">Главные направления</h2>
   <p class="section-subtitle">Самые популярные курсы для старта</p>
   <div class="grid">
-    
-    <div class="card" style="border-top: 4px solid var(--accent);">
-      <div style="font-size: 42px; margin-bottom: 15px;">🧩</div>
-      <h3>Создание игр на Scratch</h3>
-      <p>Блочное программирование для создания полноценных 2D-игр. Идеально для новичков.</p>
-    </div>
-
-    <div class="card" style="border-top: 4px solid var(--primary);">
-      <div style="font-size: 42px; margin-bottom: 15px;">💻</div>
-      <h3>Терминальные игры на Python</h3>
-      <p>Переходим на настоящий код! Создаём текстовые квесты и игры в консоли.</p>
-    </div>
-
-    <div class="card" style="border-top: 4px solid #ef4444;">
-      <div style="font-size: 42px; margin-bottom: 15px;">🎮</div>
-      <h3>3D игры на Unreal Engine</h3>
-      <p>Работа с одним из самых мощных движков в индустрии. Создание 3D-локаций.</p>
-    </div>
-
+    <div class="card" style="border-top: 4px solid var(--accent);"><div style="font-size: 42px; margin-bottom: 15px;">🧩</div><h3>Создание игр на Scratch</h3><p>Блочное программирование для создания полноценных 2D-игр. Идеально для новичков.</p></div>
+    <div class="card" style="border-top: 4px solid var(--primary);"><div style="font-size: 42px; margin-bottom: 15px;">💻</div><h3>Терминальные игры на Python</h3><p>Переходим на настоящий код! Создаём текстовые квесты и игры в консоли.</p></div>
+    <div class="card" style="border-top: 4px solid #ef4444;"><div style="font-size: 42px; margin-bottom: 15px;">🎮</div><h3>3D игры на Unreal Engine</h3><p>Работа с одним из самых мощных движков в индустрии. Создание 3D-локаций.</p></div>
   </div>
-  
-  <div style="text-align: center; margin-top: 40px;">
-    <a href="lessons.html" class="btn btn-outline">Посмотреть все 6 курсов</a>
-  </div>
+  <div style="text-align: center; margin-top: 40px;"><a href="/lessons.html" class="btn btn-outline">Посмотреть все 6 курсов</a></div>
 </section>
 
-<!-- ПРЕПОДАВАТЕЛЬ (ABOUT) -->
 <section id="about" style="background: var(--card-bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-    
-    <!-- Карточка с фото -->
     <div style="background: var(--dark); border-radius: 24px; padding: 50px 40px; text-align: center; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-      <div style="width: 140px; height: 140px; border-radius: 50%; margin: 0 auto 24px; padding: 4px; background: linear-gradient(135deg, var(--primary), var(--accent)); box-shadow: 0 8px 20px rgba(139,92,246,0.3);">
-        <img src="my_photo.jpg" alt="Савва Головченко" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid var(--dark); display: block;">
-      </div>
+      <div style="width: 140px; height: 140px; border-radius: 50%; margin: 0 auto 24px; padding: 4px; background: linear-gradient(135deg, var(--primary), var(--accent)); box-shadow: 0 8px 20px rgba(139,92,246,0.3);"><img src="/my_photo.jpg" alt="Савва Головченко" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid var(--dark); display: block;"></div>
       <h3 style="font-size: 26px; margin-bottom: 6px;">Савва Головченко</h3>
       <div style="color: var(--primary); font-size: 16px; font-weight: 700; margin-bottom: 20px; text-transform: uppercase;">Школьник-разработчик</div>
       <p style="color: var(--text-muted); font-size: 16px; margin-bottom: 24px;">Учусь в школе, но уже делаю игры на Unreal Engine и C. Объясняю сложный код так, как сам бы хотел, чтобы объяснили мне.</p>
-      
       <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
         <span style="background: rgba(139,92,246,0.15); color: #a78bfa; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">Python</span>
         <span style="background: rgba(139,92,246,0.15); color: #a78bfa; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">C</span>
@@ -88,78 +49,30 @@
         <span style="background: rgba(139,92,246,0.15); color: #a78bfa; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">Unreal Engine</span>
       </div>
     </div>
-
-    <!-- Текст о школе -->
     <div>
       <h2 style="font-size: 36px; margin-bottom: 24px; font-weight: 900;">Почему SAVAN?</h2>
       <p style="color: var(--text-muted); font-size: 18px; margin-bottom: 20px;">Я не читаю скучные лекции. Мы садимся и пишем код. Сразу. С первой минуты.</p>
       <ul style="list-style: none; margin-top: 30px;">
-        <li style="font-size: 18px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;"><span>✅</span> <span><strong>На одном языке:</strong> Я объясняю так, чтобы было понятно именно тебе, без заумных терминов.</span></li>
+        <li style="font-size: 18px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;"><span>✅</span> <span><strong>В мини-группах:</strong> Учимся вместе, помогаем друг другу.</span></li>
         <li style="font-size: 18px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;"><span>✅</span> <span><strong>От простого к сложному:</strong> От Scratch до движка Unreal Engine.</span></li>
-        <li style="font-size: 18px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;"><span>✅</span> <span><strong>Результат:</strong> В конце каждого курса у тебя будет своя готовая игра, которую можно показать друзьям.</span></li>
+        <li style="font-size: 18px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;"><span>✅</span> <span><strong>Результат:</strong> В конце каждого курса у тебя будет своя готовая игра.</span></li>
       </ul>
     </div>
-
   </div>
 </section>
 
-<!-- ЦЕНА И CTA -->
 <section id="signup" class="container" style="padding-top: 80px; padding-bottom: 100px;">
   <div style="background: linear-gradient(135deg, #1e1b4b 0%, var(--dark) 100%); border: 1px solid var(--border); border-radius: 24px; padding: 60px 40px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
     <h2 style="font-size: clamp(28px, 4vw, 42px); margin-bottom: 16px; color: var(--text-main);">Готов создать свою первую игру?</h2>
-    
-    <!-- Блок с ценой -->
     <div style="background: rgba(139,92,246,0.1); border: 1px solid var(--primary); padding: 15px 30px; border-radius: 12px; display: inline-block; margin-bottom: 30px;">
-      <p style="margin: 0; font-size: 18px; color: white;">
-        <span style="color: var(--accent); font-weight: bold;">Пробное занятие — бесплатно!</span><br>
-        Далее — 300-500 ₽ (в зависимости от курса) за занятие.
-      </p>
+      <p style="margin: 0; font-size: 18px; color: white;"><span style="color: var(--accent); font-weight: bold;">Пробное занятие — бесплатно!</span><br>Далее — 300 ₽ за занятие.</p>
     </div>
-
-    <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 16px;">Напиши мне в Telegram, я задам пару вопросов и помогу выбрать курс.</p>
-    
-    <a href="https://t.me/savan_progschool_bot?start=site" target="_blank" class="btn btn-primary" style="font-size: 18px; padding: 16px 36px; display: inline-block;">
-      🚀 Написать боту в Telegram
-    </a>
-    
-    <p style="margin-top: 24px; font-size: 15px; color: var(--text-muted);">
-      Или напиши на почту: <a href="mailto:savanprogschool@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 600;">savanprogschool@gmail.com</a>
-    </p>
+    <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 16px;">Напиши мне в Telegram или на почту, и я подберу для тебя группу.</p>
+    <a href="https://t.me/savan_progschool_bot?start=site" target="_blank" class="btn btn-primary" style="font-size: 18px; padding: 16px 36px; display: inline-block;">🚀 Написать в Telegram</a>
+    <p style="margin-top: 24px; font-size: 15px; color: var(--text-muted);">Или пиши: <a href="mailto:savanprogschool@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 600;">savanprogschool@gmail.com</a></p>
   </div>
 </section>
 
-<!-- ФУТЕР -->
-<footer id="contacts">
-  <div class="container">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; text-align: left;">
-      <div>
-        <img src="logo.png" alt="SAVAN" style="height: 30px; margin-bottom: 16px;">
-        <p style="color: var(--text-muted);">Школа программирования и разработки игр</p>
-      </div>
-      <div>
-        <h4 style="color: white; margin-bottom: 16px;">Обучение</h4>
-        <a href="lessons.html" style="display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px;">Все курсы</a>
-        <a href="https://t.me/savan_progschool_bot" target="_blank" style="display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px;">Пробное занятие</a>
-      </div>
-      <div>
-        <h4 style="color: white; margin-bottom: 16px;">Компания</h4>
-        <a href="group.html" style="display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px;">Группы</a>
-        <a href="account.html" style="display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px;">Личный кабинет</a>
-      </div>
-      <div>
-        <h4 style="color: white; margin-bottom: 16px;">Контакты</h4>
-        <a href="mailto:savanprogschool@gmail.com" style="display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px;">savanprogschool@gmail.com</a>
-        <a href="https://t.me/savan_progschool_bot" style="display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px;">Telegram-бот</a>
-      </div>
-    </div>
-    
-    <div style="text-align: center; padding-top: 30px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 14px;">
-      <p style="margin-bottom: 10px;">© 2026 SAVAN. Молодая школа с большими амбициями.</p>
-      <!-- Юридическая строчка -->
-      <p style="font-size: 12px; opacity: 0.7;">Занятия проводятся с ведома и согласия родителей. Оплата принимается через родителей.</p>
-    </div>
-  </div>
-</footer>
-
+<footer id="site-footer"></footer>
 </body>
 </html>
