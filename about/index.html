@@ -4,65 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAVAN — О школе</title>
-<link rel="stylesheet" href="../style.css"> <!-- ВАЖНО: ../ указывает на папку выше -->
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<header>
-  <nav class="container">
-    <a href="../index.html"><img src="../logo.png" alt="SAVAN" class="logo-img"></a>
-    <ul class="nav-links">
-      <li><a href="../index.html">Главная</a></li>
-      <li><a href="../lessons.html">Уроки</a></li>
-      <li><a href="../group.html">Группы</a></li>
-      <li><a href="index.html" class="active">О школе</a></li>
-      <li><a href="../account.html" class="btn btn-outline">Личный кабинет</a></li>
-    </ul>
-  </nav>
-</header>
+<header id="site-header"></header>
 
 <section class="container" style="padding-top: 150px; min-height: 70vh; padding-bottom: 100px;">
   <h2 class="section-title">О школе SAVAN</h2>
   <p class="section-subtitle">Всё, что нужно знать перед началом обучения</p>
 
   <div class="grid">
-    <!-- Глава 1 -->
-    <div class="card">
+    <div class="card" style="border-top: 4px solid #3b82f6;">
       <h3>1. Наша школа</h3>
       <p>Кто мы, для кого мы и почему SAVAN — это круто.</p>
-      <a href="#" class="btn btn-outline" style="margin-top: 15px; width: 100%; text-align: center;">Читать</a>
+      <a href="1/index.html" class="btn btn-primary" style="margin-top: 15px; width: 100%; text-align: center;">Читать</a>
     </div>
-
-    <!-- Глава 2 -->
-    <div class="card" style="border-top: 4px solid #ef4444;">
+    <div class="card" style="border-top: 4px solid #ef4444; opacity: 0.5;">
       <h3>2. Правила</h3>
-      <p>Кодекс ученика, система очков уважения и штрафов.</p>
-      <a href="2/pravila.html" class="btn btn-primary" style="margin-top: 15px; width: 100%; text-align: center;">Читать</a>
+      <p>Кодекс ученика, система очков уважения и штрафов. (В разработке)</p>
+      <button class="btn btn-outline" style="margin-top: 15px; width: 100%; text-align: center; cursor: not-allowed;" disabled>Скоро</button>
     </div>
-
-    <!-- Глава 3 -->
-    <div class="card">
+    <div class="card" style="border-top: 4px solid #f59e0b; opacity: 0.5;">
       <h3>3. Как мы учим</h3>
-      <p>Наш подход, форматы уроков и почему это работает.</p>
-      <a href="#" class="btn btn-outline" style="margin-top: 15px; width: 100%; text-align: center;">Читать</a>
+      <p>Наш подход, форматы уроков и почему это работает. (В разработке)</p>
+      <button class="btn btn-outline" style="margin-top: 15px; width: 100%; text-align: center; cursor: not-allowed;" disabled>Скоро</button>
     </div>
-
-    <!-- Глава 4 -->
-    <div class="card">
+    <div class="card" style="border-top: 4px solid #10b981; opacity: 0.5;">
       <h3>4. Как записаться</h3>
-      <p>Пошаговая инструкция: от заявки до первого урока.</p>
-      <a href="#" class="btn btn-outline" style="margin-top: 15px; width: 100%; text-align: center;">Читать</a>
+      <p>Пошаговая инструкция: от заявки до первого урока. (В разработке)</p>
+      <button class="btn btn-outline" style="margin-top: 15px; width: 100%; text-align: center; cursor: not-allowed;" disabled>Скоро</button>
     </div>
-
-    <!-- Глава 5 -->
-    <div class="card">
+    <div class="card" style="border-top: 4px solid #8b5cf6; opacity: 0.5;">
       <h3>5. Как я это сделал</h3>
-      <p>История создания SAVAN (технологии, код и вызовы).</p>
-      <a href="#" class="btn btn-outline" style="margin-top: 15px; width: 100%; text-align: center;">Читать</a>
+      <p>История создания SAVAN (технологии, код и вызовы). (В разработке)</p>
+      <button class="btn btn-outline" style="margin-top: 15px; width: 100%; text-align: center; cursor: not-allowed;" disabled>Скоро</button>
     </div>
   </div>
 </section>
 
-<footer><p>© 2026 SAVAN.</p></footer>
+<footer id="site-footer"></footer>
+<script src="/incfah.js"></script>
 </body>
 </html>
