@@ -45,7 +45,6 @@
     margin-top: 15px;
     margin-bottom: 20px;
   }
-  /* Стиль для описания товара */
   .store-desc {
     color: var(--text-muted);
     font-size: 14px;
@@ -71,7 +70,6 @@
 <footer id="site-footer"></footer>
 <script src="/incfah.js"></script>
 
-<!-- Скрипт для загрузки товаров -->
 <script type="module">
   import { db, auth } from '/firebase.js';
   import { doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -131,7 +129,6 @@
     }
 
     try {
-      // 1. Получаем данные ученика
       const userRef = doc(db, "users", user.email);
       const userSnap = await getDoc(userRef);
 
@@ -142,17 +139,16 @@
 
       const currentRespect = userSnap.data().respect_points || 0;
 
-      // 2. Проверяем хватает ли очков
       if (currentRespect < price) {
         alert(`Недостаточно очков уважения! Нужно ${price}, у тебя ${currentRespect}.`);
         return;
       }
 
-      // 3. Списываем очки
+      // Списываем очки
       const newRespect = currentRespect - price;
       await updateDoc(userRef, { respect_points: newRespect });
 
-      // 4. Записываем покупку в store/buys
+      // Записываем покупку в store/buys
       const buysRef = doc(db, "store", "buys");
       const buyData = {
         buyer: user.email,
@@ -160,27 +156,23 @@
         date: new Date().toISOString()
       };
       
-      // Используем arrayUnion, чтобы добавить запись в массив history
       await updateDoc(buysRef, {
         history: arrayUnion(buyData)
       });
 
-      // 5. Уведомляем тебя в Telegram (через бота)
-      // ВАЖНО: Здесь мы не используем токен, а шлем запрос на Vercel, чтобы не светить его.
+      // Отправляем уведомление через send.js
       try {
         await fetch('https://savan-bot.vercel.app/api/send', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
-            name: "Покупка в магазине", 
-            phone: `Ученик ${user.email} купил "${productName}" (${price} очков)` 
+            name: user.email, 
+            phone: `Купил "${productName}" за ${price} очков. Остаток: ${newRespect}` 
           })
         });
-      } catch(e) { console.log('Ошибка отправки уведомления'); }
+      } catch(e) { console.log('Ошибка отправки уведомления', e); }
 
-      // 6. Показываем успех
       alert(`Успешно куплено: ${productName}! Списано ${price} очков. Остаток: ${newRespect}`);
-      // Обновляем страницу для обновления карточек
       window.location.reload();
 
     } catch (error) {
