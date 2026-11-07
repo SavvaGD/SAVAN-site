@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAVAN — Технологии</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  .doc-content { background: var(--card-bg); border: 1px solid var(--border); padding: 40px; border-radius: 16px; line-height: 1.8; border-left: 4px solid #8b5cf6; }
+  .doc-content p { margin-bottom: 20px; color: var(--text-main); }
+  .doc-content h3 { margin-top: 30px; margin-bottom: 15px; color: #8b5cf6; }
+  .doc-content ul { margin-left: 20px; margin-bottom: 20px; color: var(--text-muted); }
+  .doc-content li { margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<section class="container" style="padding-top: 150px; max-width: 800px; min-height: 70vh; padding-bottom: 100px;">
+  <div style="margin-bottom: 20px; color: var(--text-muted); font-size: 14px;">
+    <a href="/about/index.html" style="color: var(--primary); text-decoration: none;">О школе</a> / 
+    <a href="index.html" style="color: var(--primary); text-decoration: none;">Глава 5</a> / 
+    <span>Пункт 5.1</span>
+  </div>
+  <div class="doc-content">
+    <h2 style="color: var(--text-main); margin-bottom: 20px;">5.1. Технологический стек</h2>
+    <p>Сайт SAVAN — это не конструктор на базе готовых шаблонов. Это полноценный веб-проект, написанный с нуля.</p>
+    
+    <h3>Что используется внутри:</h3>
+    <ul>
+      <li><strong>HTML5 и CSS3:</strong> Для верстки страниц и создания темного дизайна (без использования тяжелых фреймворков).</li>
+      <li><strong>JavaScript (Vanilla JS):</strong> Для логики подгрузки меню (header/footer) и работы интерактива.</li>
+      <li><strong>Telegram Bot API:</strong> Для приема заявок от учеников.</li>
+      <li><strong>Firebase (Google):</strong> Как база данных для хранения информации об учениках, группах и очках.</li>
+    </ul>
+    <p>Самое забавное, что все это сделано не на мощном компьютере с кучей программ, а прямо в браузере телефона и на GitHub.</p>
+  </div>
+</section>
+<footer id="site-footer"></footer>
+<script src="/incfah.js"></script>
+</body>
+</html>
