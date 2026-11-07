@@ -73,8 +73,8 @@
 
 <!-- Скрипт для загрузки товаров -->
 <script type="module">
-  import { db } from '/firebase.js';
-  import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { db, auth } from '/firebase.js';
+  import { doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const container = document.getElementById('store-container');
 
@@ -93,8 +93,6 @@
       for (const [key, item] of Object.entries(productsData)) {
         const iconName = item.icon || 'default'; 
         const imgPath = `/prods/${iconName}.png`;
-
-        // Если описание есть - выводим его, если нет - пустая строка
         const descriptionHTML = item.description 
           ? `<p class="store-desc">${item.description}</p>` 
           : `<p class="store-desc" style="opacity: 0.5;">Описание скоро появится...</p>`;
@@ -110,7 +108,7 @@
           </div>
           <div>
             <div class="store-price">${item.price} 🏆</div>
-            <button onclick="buyProduct('${key}')" class="btn btn-primary" style="width: 100%;">Купить</button>
+            <button onclick="buyProduct('${key}', ${item.price}, '${item.name}')" class="btn btn-primary" style="width: 100%;">Купить</button>
           </div>
         `;
         container.appendChild(card);
@@ -122,8 +120,73 @@
     }
   }
 
-  window.buyProduct = (productId) => {
-    alert(`Ты пытаешься купить товар: ${productId}. (Скоро здесь появится списание очков)`);
+  // ФУНКЦИЯ ПОКУПКИ
+  window.buyProduct = async (productId, price, productName) => {
+    const user = auth.currentUser;
+    
+    if (!user) {
+      alert('Для покупки нужно войти в личный кабинет!');
+      window.location.href = '/account.html';
+      return;
+    }
+
+    try {
+      // 1. Получаем данные ученика
+      const userRef = doc(db, "users", user.email);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        alert('Ошибка: профиль ученика не найден.');
+        return;
+      }
+
+      const currentRespect = userSnap.data().respect_points || 0;
+
+      // 2. Проверяем хватает ли очков
+      if (currentRespect < price) {
+        alert(`Недостаточно очков уважения! Нужно ${price}, у тебя ${currentRespect}.`);
+        return;
+      }
+
+      // 3. Списываем очки
+      const newRespect = currentRespect - price;
+      await updateDoc(userRef, { respect_points: newRespect });
+
+      // 4. Записываем покупку в store/buys
+      const buysRef = doc(db, "store", "buys");
+      const buyData = {
+        buyer: user.email,
+        product: productId,
+        date: new Date().toISOString()
+      };
+      
+      // Используем arrayUnion, чтобы добавить запись в массив history
+      await updateDoc(buysRef, {
+        history: arrayUnion(buyData)
+      });
+
+      // 5. Уведомляем тебя в Telegram (через бота)
+      // ВАЖНО: Здесь мы не используем токен, а шлем запрос на Vercel, чтобы не светить его.
+      try {
+        await fetch('https://savan-bot.vercel.app/api/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            name: "Покупка в магазине", 
+            phone: `Ученик ${user.email} купил "${productName}" (${price} очков)` 
+          })
+        });
+      } catch(e) { console.log('Ошибка отправки уведомления'); }
+
+      // 6. Показываем успех
+      alert(`Успешно куплено: ${productName}! Списано ${price} очков. Остаток: ${newRespect}`);
+      // Обновляем страницу для обновления карточек
+      window.location.reload();
+
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка при покупке: ' + error.message);
+    }
   };
 
   loadStore();
