@@ -45,6 +45,14 @@
     margin-top: 15px;
     margin-bottom: 20px;
   }
+  /* Стиль для описания товара */
+  .store-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
 </style>
 </head>
 <body>
@@ -72,7 +80,6 @@
 
   async function loadStore() {
     try {
-      // Берем документ products из коллекции store
       const productsDoc = await getDoc(doc(db, "store", "products"));
       
       if (!productsDoc.exists()) {
@@ -83,12 +90,14 @@
       const productsData = productsDoc.data();
       container.innerHTML = ''; 
 
-      // Перебираем все поля внутри документа (domain, skin и т.д.)
       for (const [key, item] of Object.entries(productsData)) {
-        
-        // Берем картинку из поля icon, если его нет - ставим логотип
         const iconName = item.icon || 'default'; 
         const imgPath = `/prods/${iconName}.png`;
+
+        // Если описание есть - выводим его, если нет - пустая строка
+        const descriptionHTML = item.description 
+          ? `<p class="store-desc">${item.description}</p>` 
+          : `<p class="store-desc" style="opacity: 0.5;">Описание скоро появится...</p>`;
 
         const card = document.createElement('div');
         card.className = 'store-card';
@@ -97,6 +106,7 @@
           <div>
             <img src="${imgPath}" class="store-img" alt="${item.name}" onerror="this.src='/logo.png'; this.style.opacity='0.5';">
             <h3>${item.name}</h3>
+            ${descriptionHTML}
           </div>
           <div>
             <div class="store-price">${item.price} 🏆</div>
@@ -112,7 +122,6 @@
     }
   }
 
-  // Временная функция покупки
   window.buyProduct = (productId) => {
     alert(`Ты пытаешься купить товар: ${productId}. (Скоро здесь появится списание очков)`);
   };
