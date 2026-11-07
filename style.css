@@ -93,3 +93,22 @@ footer { background: var(--dark); border-top: 1px solid var(--border); color: va
   .nav-links { display: none; }
   .hero { padding: 120px 0 60px; }
 }
+
+/* --- СКРИПТ ДЛЯ ПОДГРУЗКИ HEADER И FOOTER --- */
+document.addEventListener('DOMContentLoaded', () => {
+  // Подгружаем header
+  fetch('/header.html')
+    .then(response => response.text())
+    .then(data => {
+      const headerPlaceholder = document.getElementById('site-header');
+      if (headerPlaceholder) headerPlaceholder.outerHTML = data;
+    });
+
+  // Подгружаем footer
+  fetch('/footer.html')
+    .then(response => response.text())
+    .then(data => {
+      const footerPlaceholder = document.getElementById('site-footer');
+      if (footerPlaceholder) footerPlaceholder.outerHTML = data;
+    });
+});
