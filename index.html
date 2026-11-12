@@ -84,15 +84,26 @@
   </div>
 </section>
 
+<!-- БЛОК С МАСКОТОМ -->
+<section class="container" style="padding-bottom: 50px;">
+  <div style="background: var(--card-bg); border-radius: 24px; padding: 30px; display: flex; align-items: center; gap: 30px; border: 1px solid var(--border); flex-wrap: wrap; justify-content: center; text-align: center;">
+    <img src="/pixel.png" alt="Пиксель" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 3px solid var(--primary); box-shadow: 0 0 20px rgba(139,92,246,0.4);">
+    <div style="max-width: 500px; text-align: left;">
+      <h3 style="font-size: 24px; color: white; margin-bottom: 10px;">Знакомьтесь, это Пиксель 🐈‍⬛</h3>
+      <p style="color: var(--text-muted); font-size: 16px; margin: 0;">Официальный талисман SAVAN и главный тестировщик игр. Он следит за порядком в чатах и очень не любит, когда кто-то получает <a href="/about/2/index.html" style="color: #ef4444; text-decoration: none;">очки неуважения</a>. Лучше выполняйте домашки! 😉</p>
+    </div>
+  </div>
+</section>
+
 <!-- ЦЕНА И ФОРМА ЗАПИСИ -->
-<section id="signup" class="container" style="padding-top: 80px; padding-bottom: 100px;">
+<section id="signup" class="container" style="padding-top: 50px; padding-bottom: 100px;">
   <div style="background: linear-gradient(135deg, #1e1b4b 0%, var(--dark) 100%); border: 1px solid var(--border); border-radius: 24px; padding: 60px 40px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
     <h2 style="font-size: clamp(28px, 4vw, 42px); margin-bottom: 16px; color: var(--text-main);">Готов создать свою первую игру?</h2>
     
     <div style="background: rgba(139,92,246,0.1); border: 1px solid var(--primary); padding: 15px 30px; border-radius: 12px; display: inline-block; margin-bottom: 30px;">
       <p style="margin: 0; font-size: 18px; color: white;">
         <span style="color: var(--accent); font-weight: bold;">Пробное занятие — бесплатно!</span><br>
-        Далее — 300-550 ₽ (в зависимости от курса) за занятие.
+        Далее — 300 ₽ за занятие.
       </p>
     </div>
 
@@ -108,7 +119,7 @@
 
       <!-- КАПЧА -->
       <div style="display: flex; justify-content: center; margin: 10px 0;">
-        <div class="g-recaptcha" data-sitekey="6LfvzRUuAAAAAKW2cUOZ4VYYlb9gtA72s9RIc0zk" data-theme="dark"></div>
+        <div class="g-recaptcha" data-sitekey="6LfzvRUAAAAAAKw... (тут твой ключ)" data-theme="dark"></div>
       </div>
 
       <button type="submit" id="submit-btn" class="btn btn-primary" style="padding: 14px 32px; font-size: 16px; margin-top: 10px;">🚀 Записаться</button>
@@ -156,20 +167,26 @@
     submitBtn.disabled = true;
 
     try {
-      const response = await fetch('https://savan-bot.vercel.app/api/send', {
+      // ОТПРАВЛЯЕМ ПРЯМО В ВЕБХУК БОТА, ЧТОБЫ ОН НЕ СПАЛ
+      const response = await fetch('https://savan-bot.vercel.app/api/webhook', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          name: name, 
-          phone: phone, 
-          recaptchaToken: recaptchaToken 
+          update_id: Math.floor(Math.random() * 1000000),
+          message: {
+            message_id: Math.floor(Math.random() * 1000000),
+            from: { id: 123456789, is_bot: false, first_name: "Site" },
+            chat: { id: 123456789, first_name: "Site", type: "private" },
+            date: Math.floor(Date.now() / 1000),
+            text: `/notify_buy Имя: ${name}, Телефон: ${phone}`
+          }
         })
       });
 
       if (response.ok) {
         alert('Спасибо! Заявка отправлена. Савва скоро свяжется с тобой.');
         form.reset();
-        grecaptcha.reset(); // Сбрасываем капчу для следующей заявки
+        grecaptcha.reset(); // Сбрасываем капчу
       } else {
         alert('Ой, что-то пошло не так. Попробуй написать в Telegram.');
       }
