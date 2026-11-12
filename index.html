@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAVAN — Школа программирования и геймдева</title>
 <link rel="stylesheet" href="/style.css">
+<!-- Возвращаем reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 
@@ -101,7 +103,7 @@
     <div style="background: rgba(139,92,246,0.1); border: 1px solid var(--primary); padding: 15px 30px; border-radius: 12px; display: inline-block; margin-bottom: 30px;">
       <p style="margin: 0; font-size: 18px; color: white;">
         <span style="color: var(--accent); font-weight: bold;">Пробное занятие — бесплатно!</span><br>
-        Далее — 300 ₽ за занятие.
+        Далее — 300-550 ₽ (в зависимости от курса) за занятие.
       </p>
     </div>
 
@@ -113,6 +115,11 @@
       <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
         <input type="text" id="name-input" placeholder="Ваше имя" required style="flex: 1; min-width: 200px; padding: 14px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); color: white; font-size: 16px;">
         <input type="tel" id="phone-input" placeholder="Телефон" required style="flex: 1; min-width: 200px; padding: 14px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); color: white; font-size: 16px;">
+      </div>
+
+      <!-- КАПЧА -->
+      <div style="display: flex; justify-content: center; margin: 10px 0;">
+        <div class="g-recaptcha" data-sitekey="6LfvzRUuAAAAAKW2cUOZ4VYYlb9gtA72s9RIc0zk" data-theme="dark"></div>
       </div>
 
       <button type="submit" id="submit-btn" class="btn btn-primary" style="padding: 14px 32px; font-size: 16px; margin-top: 10px;">🚀 Записаться</button>
@@ -137,7 +144,7 @@
 <footer id="site-footer"></footer>
 <script src="/incfah.js"></script>
 
-<!-- СКРИПТ ДЛЯ ОТПРАВКИ ФОРМЫ (С ЛОГАМИ) -->
+<!-- СКРИПТ ДЛЯ ОТПРАВКИ ФОРМЫ -->
 <script>
   const form = document.getElementById('signup-form');
   const submitBtn = document.getElementById('submit-btn');
@@ -147,6 +154,14 @@
     
     const name = document.getElementById('name-input').value;
     const phone = document.getElementById('phone-input').value;
+    
+    // Получаем токен от reCAPTCHA
+    const recaptchaToken = grecaptcha.getResponse();
+
+    if (!recaptchaToken) {
+      alert('Пожалуйста, поставьте галочку "Я не робот"!');
+      return;
+    }
 
     submitBtn.innerText = 'Отправка...';
     submitBtn.disabled = true;
@@ -167,17 +182,16 @@
         })
       });
 
-      // ВЫВОДИМ СТАТУС В КОНСОЛЬ
       console.log('Статус ответа от Vercel:', response.status);
 
       if (response.ok) {
         alert('Спасибо! Заявка отправлена. Савва скоро свяжется с тобой.');
         form.reset();
+        grecaptcha.reset(); // Сбрасываем капчу
       } else {
         alert('Ой, что-то пошло не так. Попробуй написать в Telegram.');
       }
     } catch (error) {
-      // ВЫВОДИМ ОШИБКУ В КОНСОЛЬ
       console.error('Ошибка при отправке:', error);
       alert('Ошибка сети. Проверь интернет. Попробуйте включить VPN.');
     } finally {
