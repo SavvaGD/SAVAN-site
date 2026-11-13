@@ -144,11 +144,32 @@
         return;
       }
 
-      // Списываем очки
+      // 1. СНАЧАЛА ПЫТАЕМСЯ ОТПРАВИТЬ УВЕДОМЛЕНИЕ В ТЕЛЕГРАМ
+      try {
+        const response = await fetch('https://savan-bot.vercel.app/api/webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            name: user.email, 
+            phone: `Купил "${productName}" за ${price} очков` 
+          })
+        });
+
+        // Если сервер не ответил "ОК", значит уведомление не ушло
+        if (!response.ok) {
+          throw new Error('Vercel вернул ошибку');
+        }
+      } catch (error) {
+        console.error('Ошибка отправки в Telegram:', error);
+        alert('Ошибка сети! Не удалось отправить заявку в Telegram. Включите VPN и попробуйте снова. Очки не списаны.');
+        return; // Прерываем покупку, очки не трогаем
+      }
+
+      // 2. ЕСЛИ УВЕДОМЛЕНИЕ УШЛО, ТО ТЕПЕРЬ СПИСЫВАЕМ ОЧКИ
       const newRespect = currentRespect - price;
       await updateDoc(userRef, { respect_points: newRespect });
 
-      // Записываем покупку в store/buys
+      // 3. ЗАПИСЫВАЕМ ПОКУПКУ В FIREBASE
       const buysRef = doc(db, "store", "buys");
       const buyData = {
         buyer: user.email,
@@ -159,18 +180,6 @@
       await updateDoc(buysRef, {
         history: arrayUnion(buyData)
       });
-
-      // Отправляем уведомление через send.js
-      try {
-        await fetch('https://savan-bot.vercel.app/api/send', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            name: user.email, 
-            phone: `Купил "${productName}" за ${price} очков. Остаток: ${newRespect}` 
-          })
-        });
-      } catch(e) { console.log('Ошибка отправки уведомления', e); }
 
       alert(`Успешно куплено: ${productName}! Списано ${price} очков. Остаток: ${newRespect}`);
       window.location.reload();
